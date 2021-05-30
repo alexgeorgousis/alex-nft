@@ -1,0 +1,125 @@
+{
+  "contractName": "AlexNFT",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/productivity/repos/alex-nft/contracts/AlexNFT.sol\":\"AlexNFT\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/productivity/repos/alex-nft/contracts/AlexNFT.sol\":{\"keccak256\":\"0x4451181757baff2af6981bb8a96638b059a6bfb930653f31a4e35c55ba098a3d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://23496428eda3f953ed2b21db559df8d63958c46c99c89476e83d57b5009fc947\",\"dweb:/ipfs/QmdAndP2fA64sN6HJk4vdjMh6NCxg7V7pYT5jrsnC3y1kV\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212204513c21ae246c11a8cf6bc090301f477ac8c669b3fcc554d528fc34f2ce7ccb964736f6c63430008040033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212204513c21ae246c11a8cf6bc090301f477ac8c669b3fcc554d528fc34f2ce7ccb964736f6c63430008040033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "58:21:0:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "58:21:0:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\n\ncontract AlexNFT {\n\n}\n",
+  "sourcePath": "/Users/productivity/repos/alex-nft/contracts/AlexNFT.sol",
+  "ast": {
+    "absolutePath": "/Users/productivity/repos/alex-nft/contracts/AlexNFT.sol",
+    "exportedSymbols": {
+      "AlexNFT": [
+        2
+      ]
+    },
+    "id": 3,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 2,
+        "linearizedBaseContracts": [
+          2
+        ],
+        "name": "AlexNFT",
+        "nameLocation": "67:7:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 3,
+        "src": "58:21:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:48:0"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/productivity/repos/alex-nft/contracts/AlexNFT.sol",
+    "exportedSymbols": {
+      "AlexNFT": [
+        2
+      ]
+    },
+    "id": 3,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 2,
+        "linearizedBaseContracts": [
+          2
+        ],
+        "name": "AlexNFT",
+        "nameLocation": "67:7:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 3,
+        "src": "58:21:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "32:48:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.4+commit.c7e474f2.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x6b4B0d7074E559aAc68C474ed885639684119ACD",
+      "transactionHash": "0x286dc454ec259b37c63b7fabfd5a354e69d92bcfdef9ab2dd5db610320e861b8"
+    }
+  },
+  "schemaVersion": "3.4.1",
+  "updatedAt": "2021-05-30T09:43:57.248Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
