@@ -1,5 +1,5 @@
-var AlexNFT = artifacts.require("./AlexNFT.sol");
+var AlexStar = artifacts.require("./AlexStar.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(AlexNFT, "Unique Alex STAR!");
+  deployer.deploy(AlexStar);
 };
