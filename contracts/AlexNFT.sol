@@ -10,10 +10,10 @@ contract AlexNFT {
         nftName = _nftName;
     }
     
-    event nftClaimed(address owner);
+    event NftClaimed(address owner);
     
     function claimNFT() public {
         owner = msg.sender;
-        emit nftClaimed(owner);
+        emit NftClaimed(owner);
     }
 }
