@@ -22,9 +22,10 @@ contract AlexStar is ERC721("Alex Star", "ASTAR"){
         require(msg.value == _getPrice(_tokenId), "Amount must equal star price");
 
         // Transfer value to star owner
-        // (bool success, bytes memory data) = payable(ownerOf(_tokenId)).call{value: msg.value}("");
-        // require(success, "Failed to transfer Ether to star owner");
-        payable(ownerOf(_tokenId)).transfer(msg.value);
+        // Note: the following method is apparently discouraged for security reasons
+        // payable(ownerOf(_tokenId)).transfer(msg.value);
+        (bool success, bytes memory data) = payable(ownerOf(_tokenId)).call{value: msg.value}("");
+        require(success, "Failed to transfer Ether to star owner");
 
         _transfer(ownerOf(_tokenId), msg.sender, _tokenId);
     }
