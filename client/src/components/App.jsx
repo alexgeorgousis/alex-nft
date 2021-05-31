@@ -5,19 +5,40 @@ import Star from "./Star";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { fetchStars, createStar } from "../utils/web3_utils";
+import { buyStar } from "../utils/web3_utils";
 
 
 const App = () => {
   const [account, setAccount] = useState("");
   const [stars, setStars] = useState([]);
-  const starComponents = stars.map(star => <Star id={star.id} name={star.name} price={star.price} account={account} />);
+
+  const onBuy = (starInfo) => {
+    buyStar(starInfo)
+      .then(() => fetchStars(account).then(result => setStars(result)));
+  }
+  const starComponents = stars.map(star =>
+    <Star
+      key={star.id}
+      id={star.id} name={star.name} price={star.price} imageSrc={star.imageSrc}
+      account={account} isOwner={star.isOwner} onBuyParent={onBuy} />);
 
   const [inputName, setInputName] = useState("");
   const [inputPrice, setInputPrice] = useState("");
+  const [inputImageSrc, setInputImageSrc] = useState("");
 
   useEffect(() => {
-    fetchStars().then(result => setStars(result));
+    window.ethereum.on("accountsChanged", accounts => accounts && setAccount(accounts[0]));
   }, []);
+
+  useEffect(() => {
+    // Check if already connected to a provider
+    web3.eth.getAccounts()
+      .then((accounts) => {
+        if (accounts.length > 0) setAccount(accounts[0]);
+      }, console.log);
+
+    fetchStars(account).then(result => setStars(result));
+  }, [account]);
 
   const connectWallet = () => {
     web3.eth.requestAccounts()
@@ -28,10 +49,12 @@ const App = () => {
   const onCreate = async (e) => {
     e.preventDefault();
 
-    createStar({ name: inputName, price: inputPrice, ownerAddress: account })
-      .then(() => fetchStars().then(result => setStars(result)))
+    createStar({ name: inputName, price: inputPrice, imageSrc: inputImageSrc, ownerAddress: account })
+      .then(() => fetchStars(account).then(result => setStars(result)))
       .catch(console.log);
   }
+
+
 
   return (
     <div>
@@ -60,6 +83,11 @@ const App = () => {
             <Form.Control
               type="number" placeholder="Star price"
               onChange={(e) => setInputPrice(e.target.value)}
+            />
+
+            <Form.Control
+              type="text" placeholder="Image link (Optional)"
+              onChange={(e) => setInputImageSrc(e.target.value)}
             />
 
             <Button type="submit" variant="outline-primary">Create</Button>
