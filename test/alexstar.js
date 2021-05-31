@@ -8,7 +8,8 @@ contract("AlexStar", accounts => {
         instance = await AlexStar.new();
     });
 
-    it("should have correct symbol", async () => {
+    it("should have correct name and symbol", async () => {
+        assert.equal(await instance.name(), "Alex Star");
         assert.equal(await instance.symbol(), "ASTAR");
     });
 
@@ -68,5 +69,75 @@ contract("AlexStar", accounts => {
         assert.equal(starCatalog[2][0], star3.id);
         assert.equal(starCatalog[2][1], star3.name);
         assert.equal(starCatalog[2][2], star3.price.toString());
+    });
+
+    it("should retrieve star name by ID", async () => {
+        const star = { name: "ASTAR #1", price: 10, id: 1 };
+        const _dummy = await instance.mintStar(star.name, star.price, { from: accounts[0] });
+
+        const retrievedName = await instance.getNameById(star.id);
+        assert.equal(retrievedName, star.name);
+    });
+
+    it("should exchange stars between two users", async () => {
+        const user1 = accounts[0];
+        const user2 = accounts[1];
+
+        const star1 = { name: "ASTAR #1", price: 10, id: 1 };
+        const star2 = { name: "ASTAR #2", price: 15, id: 2 };
+
+        const _dummy1 = await instance.mintStar(star1.name, star1.price, { from: user1 });
+        const _dummy2 = await instance.mintStar(star2.name, star2.price, { from: user2 });
+
+        // user2 needs to approve user1 to transfer user2's star 
+        const _dummy3 = await instance.approve(user1, star2.id, { from: user2 });
+        const _dummy4 = await instance.exchangeStars(star1.id, star2.id, { from: user1 });
+
+        const ownerStar1 = await instance.ownerOf(star1.id);
+        const ownerStar2 = await instance.ownerOf(star2.id);
+
+        assert.equal(ownerStar1, user2);
+        assert.equal(ownerStar2, user1);
+    });
+
+    it("should revert if exchange caller is not owner", async () => {
+        const user1 = accounts[0];
+        const user2 = accounts[1];
+        const user3 = accounts[2];
+
+        const star1 = { name: "ASTAR #1", price: 10, id: 1 };
+        const star2 = { name: "ASTAR #2", price: 15, id: 2 };
+
+        const _dummy1 = await instance.mintStar(star1.name, star1.price, { from: user1 });
+        const _dummy2 = await instance.mintStar(star2.name, star2.price, { from: user2 });
+
+        // user2 approves user1 to make the exchange, but not user3 
+        const _dummy3 = await instance.approve(user1, star2.id, { from: user2 });
+
+        await truffleAssert.reverts(
+            instance.exchangeStars(star1.id, star2.id, { from: user3 }),
+            "Only the owners of the stars can initiate an exchange"
+        );
+    });
+
+    it("should transfer star", async () => {
+        const sender = accounts[0];
+        const receiver = accounts[1];
+
+        const star = { name: "ASTAR #1", price: 10, id: 1 };
+        const _dummy1 = await instance.mintStar(star.name, star.price, { from: sender });
+
+        const _dummy2 = await instance.transferStar(receiver, star.id, { from: sender });
+        assert.equal(await instance.ownerOf(star.id), receiver);
+    });
+
+    it("should revert transfer if sender is not owner", async () => {
+        const owner = accounts[0];
+        const thief = accounts[1];
+
+        const star = { name: "ASTAR #1", price: 10, id: 1 };
+        const _dummy1 = await instance.mintStar(star.name, star.price, { from: owner });
+
+        await truffleAssert.reverts(instance.transferStar(thief, star.id, { from: thief }), "")
     });
 });
