@@ -1,2 +1,2 @@
 # ASTAR
-Dummy NFT-based dapp. 
+Simple NFT-based dapp. 
