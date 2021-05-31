@@ -7,17 +7,22 @@ contract AlexStar is ERC721("Alex Star", "ASTAR") {
         uint256 id;
         string name;
         uint256 price;
+        string imageSrc;
     }
 
     mapping(uint256 => Star) private _starCatalog;
     uint256[] private _tokenIdArray;
 
-    function mintStar(string memory _name, uint256 _price) public {
+    function mintStar(
+        string memory _name,
+        uint256 _price,
+        string memory _imageSrc
+    ) public {
         uint256 newTokenId;
         if (_tokenIdArray.length == 0) newTokenId = 1;
         else newTokenId = _tokenIdArray[_tokenIdArray.length - 1] + 1;
 
-        Star memory newStar = Star(newTokenId, _name, _price);
+        Star memory newStar = Star(newTokenId, _name, _price, _imageSrc);
         _starCatalog[newTokenId] = newStar;
         _tokenIdArray.push(newTokenId);
         _mint(msg.sender, newTokenId);
