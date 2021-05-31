@@ -14,13 +14,13 @@ contract("AlexStar", accounts => {
     });
 
     it("should mint new star and send to owner", async () => {
-        const _result = await instance.mintStar("ASTAR #1", 0, { from: accounts[1] });
+        const _result = await instance.mintStar("ASTAR #1", 0, "", { from: accounts[1] });
         assert.equal(await instance.ownerOf(1), accounts[1]);
     });
 
     it("should require value to equal star price", async () => {
         const star = { name: "ASTAR #1", price: 10, id: 1 }
-        const _dummy1 = await instance.mintStar(star.name, star.price, { from: accounts[0] });
+        const _dummy1 = await instance.mintStar(star.name, star.price, "", { from: accounts[0] });
 
         await truffleAssert.reverts(
             instance.buyStar(star.id, { from: accounts[1] }), "Amount cannot be 0"
@@ -39,7 +39,7 @@ contract("AlexStar", accounts => {
         const owner = accounts[0];
         const buyer = accounts[1];
 
-        const _dummy1 = await instance.mintStar(star.name, star.price, { from: owner });
+        const _dummy1 = await instance.mintStar(star.name, star.price, "", { from: owner });
 
         const ownerInitialBalance = await web3.eth.getBalance(owner);
         const _dummy2 = await instance.buyStar(star.id, { from: buyer, value: star.price });
@@ -53,9 +53,9 @@ contract("AlexStar", accounts => {
         const star2 = { name: "ASTAR #2", price: 15, id: 2 }
         const star3 = { name: "ASTAR #3", price: 20, id: 3 }
 
-        const _dummy1 = await instance.mintStar(star1.name, star1.price, { from: accounts[0] });
-        const _dummy2 = await instance.mintStar(star2.name, star2.price, { from: accounts[0] });
-        const _dummy3 = await instance.mintStar(star3.name, star3.price, { from: accounts[0] });
+        const _dummy1 = await instance.mintStar(star1.name, star1.price, "", { from: accounts[0] });
+        const _dummy2 = await instance.mintStar(star2.name, star2.price, "", { from: accounts[0] });
+        const _dummy3 = await instance.mintStar(star3.name, star3.price, "", { from: accounts[0] });
 
         const starCatalog = await instance.getAllStars();
         assert.equal(starCatalog[0][0], star1.id);
@@ -73,7 +73,7 @@ contract("AlexStar", accounts => {
 
     it("should retrieve star name by ID", async () => {
         const star = { name: "ASTAR #1", price: 10, id: 1 };
-        const _dummy = await instance.mintStar(star.name, star.price, { from: accounts[0] });
+        const _dummy = await instance.mintStar(star.name, star.price, "", { from: accounts[0] });
 
         const retrievedName = await instance.getNameById(star.id);
         assert.equal(retrievedName, star.name);
@@ -86,8 +86,8 @@ contract("AlexStar", accounts => {
         const star1 = { name: "ASTAR #1", price: 10, id: 1 };
         const star2 = { name: "ASTAR #2", price: 15, id: 2 };
 
-        const _dummy1 = await instance.mintStar(star1.name, star1.price, { from: user1 });
-        const _dummy2 = await instance.mintStar(star2.name, star2.price, { from: user2 });
+        const _dummy1 = await instance.mintStar(star1.name, star1.price, "", { from: user1 });
+        const _dummy2 = await instance.mintStar(star2.name, star2.price, "", { from: user2 });
 
         // user2 needs to approve user1 to transfer user2's star 
         const _dummy3 = await instance.approve(user1, star2.id, { from: user2 });
@@ -108,8 +108,8 @@ contract("AlexStar", accounts => {
         const star1 = { name: "ASTAR #1", price: 10, id: 1 };
         const star2 = { name: "ASTAR #2", price: 15, id: 2 };
 
-        const _dummy1 = await instance.mintStar(star1.name, star1.price, { from: user1 });
-        const _dummy2 = await instance.mintStar(star2.name, star2.price, { from: user2 });
+        const _dummy1 = await instance.mintStar(star1.name, star1.price, "", { from: user1 });
+        const _dummy2 = await instance.mintStar(star2.name, star2.price, "", { from: user2 });
 
         // user2 approves user1 to make the exchange, but not user3 
         const _dummy3 = await instance.approve(user1, star2.id, { from: user2 });
@@ -125,7 +125,7 @@ contract("AlexStar", accounts => {
         const receiver = accounts[1];
 
         const star = { name: "ASTAR #1", price: 10, id: 1 };
-        const _dummy1 = await instance.mintStar(star.name, star.price, { from: sender });
+        const _dummy1 = await instance.mintStar(star.name, star.price, "", { from: sender });
 
         const _dummy2 = await instance.transferStar(receiver, star.id, { from: sender });
         assert.equal(await instance.ownerOf(star.id), receiver);
@@ -136,7 +136,7 @@ contract("AlexStar", accounts => {
         const thief = accounts[1];
 
         const star = { name: "ASTAR #1", price: 10, id: 1 };
-        const _dummy1 = await instance.mintStar(star.name, star.price, { from: owner });
+        const _dummy1 = await instance.mintStar(star.name, star.price, "", { from: owner });
 
         await truffleAssert.reverts(instance.transferStar(thief, star.id, { from: thief }), "")
     });
