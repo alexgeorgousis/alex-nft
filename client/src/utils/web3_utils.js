@@ -1,7 +1,7 @@
 import web3 from "../index";
 import AlexStar from "../contracts/AlexStar.json";
 
-const contractAddress = "0xF6C113E7F7366ac09aB6862EDd8A8eCf3ECdCA6d";
+const contractAddress = "0x0C0eF871C23b2fcFF1F644E68E7641bC0A7C0d64";
 
 export async function fetchStars(activeAccount) {
     const contract = new web3.eth.Contract(AlexStar.abi, contractAddress);
